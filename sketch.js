@@ -110,7 +110,7 @@ function draw() {
   }
 
 
-  image(shape1, 0, 0, 100, 100);
+  // image(shape1, 0, 0, 100, 100);
 
 
   if (shape3Dragging) {
