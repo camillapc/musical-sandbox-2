@@ -1,10 +1,24 @@
 var bg;
 var x = 0;
 var currentBg = null;
+
+
+var shapes = ["shape1", "shape2", "shape3", "shape4"];
 var shape1 = null;
 var shape2 = null;
 var shape3 = null;
 var shape4 = null;
+
+
+var shape1selected = false;
+
+//for four images
+var shapeDragged = [false, false, false, false, false];
+
+
+//this starts false
+shape3Dragging = false;
+
 
 var shape1Sound;
 
@@ -21,10 +35,16 @@ function setup() {
   pixelDensity();
   background("#3e443a");
 
+
+  // document.getElementById(shapes[0]).style.width = "100px";
+  // document.getElementById(shapes[0]).style.height = "100px";
   shape1 = createImg('shape1.png');
   shape1.size(100, 100);
   shape1.position(200, 0);
+  //add to index html, no callbacks in javascript
+  //just add event listeners on htmlgg
   shape1.mousePressed(shape1Pressed);
+  shape1.mouseMoved(test);
 
     shape1Sound.loop();
   shape1Sound.pause();
@@ -34,14 +54,30 @@ function setup() {
   shape2.position(300, 0);
   shape2.mousePressed(shape2Pressed);
 
+  shapes[0] = "hey";
+  shapes[1] = "stuff";
+
   //now the variable shape3 is a shortcut to the img
   //with id shape3 on the html file
-  shape3 = document.getElementById("shape3");
-  shape3.style.width = "100px";
-  shape3.style.height = "100px";
-  shape3.style.position = "absolute";
-  shape3.style.top = "0px";
-  shape3.style.left = "0px";
+  // shape3 = document.getElementById("shape3");
+  // shape3.style.width = "100px";
+  // shape3.style.height = "100px";
+  // shape3.style.position = "absolute";
+  // shape3.style.top = "0px";
+  // shape3.style.left = "0px";
+
+  //shapes[2] = document.getElementById("shape3");
+  // shapes[2].style.width = "100px";
+  // shapes[2].style.height = "100px";
+  // shapes[2].style.position = "absolute";
+  // shapes[2].style.top = "0px";
+  // shapes[2].style.left = "0px";
+
+  document.getElementById(shapes[2]).style.width = "100px";
+  document.getElementById(shapes[2]).style.height = "100px";
+  document.getElementById(shapes[2]).style.position = "absolute";
+  document.getElementById(shapes[2]).style.top = "0px";
+  document.getElementById(shapes[2]).style.left = "0px";
 
   shape3Sound.loop();
   shape3Sound.pause();
@@ -75,6 +111,23 @@ function draw() {
 
 
   image(shape1, 0, 0, 100, 100);
+
+
+  if (shape3Dragging) {
+		shape3.style.marginLeft = mouseX + "px";
+		shape3.style.marginTop = mouseY + "px";
+		// shape3.style.marginLeft = "300px";
+		// shape3.style.marginTop = "300px";
+  }
+
+
+
+      document.getElementById(shapes[2]).style.marginLeft = mouseX + "px";
+			document.getElementById(shapes[2]).style.marginTop = mouseY + "px";
+
+
+
+
 }
 
 
@@ -98,12 +151,21 @@ function shape2Pressed() {
 }
 
 function shape3Clicked() {
-  print("hey");
-  if (shape3Sound.isPlaying()) {
-    shape3Sound.stop();
-  } else {
-    shape3Sound.play();
-  }
+  shape3Dragging = !shape3Dragging;
+  // print("hey");
+  // if (shape3Sound.isPlaying()) {
+  //   shape3Sound.stop();
+  // } else {
+  //   shape3Sound.play();
+  // }
+}
+
+function shapeMouseDown(index) {
+  shapeDragged[index] = true;
+}
+
+function shapeMouseUp(index) {
+  shapeDragged[index] = false;
 }
 
 
@@ -118,8 +180,17 @@ function shape4Clicked() {
 
 function touchStarted() {
   print("start");
+  // shape1selected = true;
+}
+
+function test() {
+  if(shape1selected==true){
+
+  shape1.position(mouseX,mouseY);
+  }
 }
 
 function touchEnded() {
   print("ended");
+  //shape1.position(mouseX,mouseY);
 }
